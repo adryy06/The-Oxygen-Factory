@@ -1,0 +1,356 @@
+/* ==========================================================================
+   1. CORE & INTERACTION CONTROLS
+   ========================================================================== */
+* {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.cursor-none {
+    cursor: none !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.cursor-pointer:hover {
+    filter: brightness(1.2) drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+    transform: scale(1.1);
+}
+
+.cursor-pointer:active {
+    transform: scale(0.95);
+}
+
+.cursor-grab {
+    cursor: grab;
+}
+
+.cursor-grabbing {
+    cursor: grabbing;
+}
+
+/* ==========================================================================
+   2. ANIMATIONS (KEYFRAMES) - Letakkan di sini untuk elak ralat VS Code
+   ========================================================================== */
+
+@keyframes sway {
+
+    0%,
+    100% {
+        transform: rotate(-1.5deg);
+    }
+
+    50% {
+        transform: rotate(1.5deg);
+    }
+}
+
+@keyframes wiggle {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(2px, -2px) rotate(3deg);
+    }
+
+    75% {
+        transform: translate(-2px, 2px) rotate(-3deg);
+    }
+}
+
+@keyframes pollen-float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-30px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes smoke-float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(-20px) translateX(10px) scale(1.2);
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translateY(-50px) translateX(-5px) scale(1.5);
+        opacity: 0;
+    }
+}
+
+@keyframes drive {
+    from {
+        transform: translateX(120%);
+    }
+
+    to {
+        transform: translateX(-120%);
+    }
+}
+
+@keyframes pulse-slow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.4));
+    }
+
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 25px rgba(96, 165, 250, 0.7));
+    }
+}
+
+/* Animasi putaran 360 derajat yang halus */
+@keyframes spin-360 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-fast {
+    animation: spin-360 1s linear infinite;
+    /* 1 detik per putaran */
+}
+
+@keyframes grass-sway {
+
+    0%,
+    100% {
+        transform: rotate(-5deg) scaleY(1);
+    }
+
+    50% {
+        transform: rotate(5deg) scaleY(1.1);
+    }
+}
+
+@keyframes wind-flow {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    to {
+        transform: translateX(1200px);
+        opacity: 0;
+    }
+}
+
+@keyframes leaf-fall {
+    0% {
+        transform: translateY(-10vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translateY(110vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ==========================================================================
+   3. CLASS ASSIGNMENTS
+   ========================================================================== */
+
+.animate-sway {
+    transform-origin: bottom center;
+    animation: sway 4s ease-in-out infinite;
+}
+
+.animate-wiggle {
+    animation: wiggle 0.15s ease-in-out infinite;
+}
+
+.pollen-particle {
+    animation: pollen-float 1.5s ease-out forwards;
+}
+
+.animate-smoke {
+    animation: smoke-float 4s infinite linear;
+}
+
+.car-move {
+    animation: drive 10s linear infinite;
+    filter: drop-shadow(2px 4px 2px rgba(0, 0, 0, 0.3));
+}
+
+.earth-pulse {
+    animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin 10s linear infinite;
+}
+
+.animate-grass-sway {
+    transform-origin: bottom center;
+    animation: grass-sway 3s ease-in-out infinite;
+    opacity: 0.8;
+}
+
+.animate-wind-flow {
+    animation: wind-flow 3s linear infinite;
+}
+
+.animate-leaf-fall {
+    position: absolute;
+    top: -10%;
+    animation: leaf-fall 8s linear infinite;
+    pointer-events: none;
+}
+
+.bg-gradient-animate {
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+}
+
+/* ==========================================================================
+   4. UI ELEMENTS & LAYOUT
+   ========================================================================== */
+
+#basket-zone {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#basket-zone:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.leaderboard-section {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border: 2px solid #4CAF50;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.leaderboard-table tr:first-child td {
+    color: #d4af37;
+    font-size: 1.2em;
+}
+
+.border-dashed:hover {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.8);
+    border-style: solid;
+}
+
+.flex.items-end-custom {
+    align-items: flex-end;
+    padding-bottom: 2rem;
+}
+
+.bg-green-700-custom {
+    background: linear-gradient(to top, #15803d, #166534);
+}
+
+.pb-20 {
+    padding-bottom: 5rem;
+}
+
+[v-cloak] {
+    display: none;
+}
+
+@keyframes windFlow {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(1000px);
+        opacity: 1;
+    }
+}
+
+.animate-wind-flow {
+    animation: windFlow linear infinite;
+}
+
+@keyframes carMove {
+    from {
+        left: -100px;
+    }
+
+    to {
+        left: 100%;
+    }
+}
+
+.car-move {
+    position: absolute;
+    animation: carMove 20s linear infinite;
+}
+
+.car-move-delayed {
+    position: absolute;
+    animation: carMove 20s linear infinite 2.5s;
+}
+
+.trash-item {
+  position: absolute;
+  font-size: 2rem; /* Atur ukuran emoji */
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+/* Class ini akan aktif otomatis saat isGlowing bernilai true */
+.trash-item.glow {
+  filter: drop-shadow(0 0 12px #00ffcc) drop-shadow(0 0 25px #00ffcc);
+  transform: scale(1.2); /* Sedikit membesar agar efek sentuhan terasa responsif */
+}
